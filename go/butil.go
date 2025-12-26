@@ -33,7 +33,7 @@ var (
 
 var bufferPool = sync.Pool{
 	New: func() any {
-		return bytes.NewBuffer(make([]byte, 0, 512))
+		return bytes.NewBuffer(make([]byte, 0, 2048))
 	},
 }
 
@@ -41,13 +41,13 @@ var bufferPool = sync.Pool{
 type ModelField struct {
 	index      byte
 	label      string
-	fieldType  BuftiType
+	fieldType  ButilType
 	isRequired *bool
 }
 
 // Field creates a new model field with the given index, label, and type.
 // The field will be required by default unless the model is configured otherwise
-func Field(index byte, label string, fieldType BuftiType) ModelField {
+func Field(index byte, label string, fieldType ButilType) ModelField {
 	return ModelField{
 		index:     index,
 		label:     label,
@@ -57,7 +57,7 @@ func Field(index byte, label string, fieldType BuftiType) ModelField {
 
 // RequiredField creates a new required model field.
 // Required fields must be present in the input data during encoding.
-func RequiredField(index byte, label string, fieldType BuftiType) ModelField {
+func RequiredField(index byte, label string, fieldType ButilType) ModelField {
 	trueValue := true
 	return ModelField{
 		index:      index,
@@ -69,7 +69,7 @@ func RequiredField(index byte, label string, fieldType BuftiType) ModelField {
 
 // OptionalField creates a new optional model field.
 // Optional fields can be omitted from the input data during encoding.
-func OptionalField(index byte, label string, fieldType BuftiType) ModelField {
+func OptionalField(index byte, label string, fieldType ButilType) ModelField {
 	falseValue := false
 	return ModelField{
 		index:      index,

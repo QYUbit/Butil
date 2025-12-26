@@ -9,9 +9,9 @@ import (
 
 // ? Indirect values before decoding
 
-// BuftiType defines the interface for all serializable types in the butil system.
+// ButilType defines the interface for all serializable types in the butil system.
 // Types implementing this interface can be used as field types in model schemas.
-type BuftiType interface {
+type ButilType interface {
 	// Encode serializes the given reflect.Value to the buffer.
 	Encode(*bytes.Buffer, reflect.Value) error
 	// Decode deserializes data from the buffer into the given reflect.Value.
@@ -67,11 +67,11 @@ func (t SimpleType) reflectType() (reflect.Type, error) {
 
 // ListType represents a list/slice of elements of a specific type.
 type ListType struct {
-	elementType BuftiType
+	elementType ButilType
 }
 
 // List creates a new list type with the specified element type.
-func List(elementType BuftiType) ListType {
+func List(elementType ButilType) ListType {
 	return ListType{elementType: elementType}
 }
 
@@ -129,11 +129,11 @@ func (t ListType) Decode(buf *bytes.Buffer, v reflect.Value) error {
 // MapType represents a map with typed keys and values.
 type MapType struct {
 	keyType   SimpleType
-	valueType BuftiType
+	valueType ButilType
 }
 
 // Map creates a new map type with the specified key and value types.
-func Map(keyType SimpleType, valueType BuftiType) MapType {
+func Map(keyType SimpleType, valueType ButilType) MapType {
 	return MapType{keyType: keyType, valueType: valueType}
 }
 

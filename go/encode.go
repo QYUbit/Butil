@@ -32,9 +32,7 @@ func (m *Model) Encode(data any) ([]byte, error) {
 		return nil, err
 	}
 
-	result := make([]byte, buf.Len())
-	copy(result, buf.Bytes())
-	return result, nil
+	return buf.Bytes(), nil
 }
 
 func (m *Model) encode(buf *bytes.Buffer, t reflect.Type, v reflect.Value) error {

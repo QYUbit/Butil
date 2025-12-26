@@ -24,9 +24,11 @@ func (m *Model) Decode(data []byte, dest any) error {
 	}
 
 	buf := bufferPool.Get().(*bytes.Buffer)
-	defer bufferPool.Put(buf)
+	defer func() {
+		buf.Reset()
+		bufferPool.Put(buf)
+	}()
 
-	buf.Reset()
 	if _, err := buf.Write(data); err != nil {
 		return err
 	}

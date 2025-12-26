@@ -641,7 +641,7 @@ func (t SimpleType) Decode(buf *bytes.Buffer, val reflect.Value) error {
 
 		switch val.Kind() {
 		case reflect.Slice:
-			if reflect.SliceOf(reflect.TypeOf(byte(0))) != val.Type() {
+			if val.Type().Elem().Kind() != reflect.Uint8 {
 				return fmt.Errorf("%w: bytes destination has to be a byte slice, got %s", ErrInput, val.Type().String())
 			}
 			val.SetBytes(data)
